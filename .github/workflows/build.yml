@@ -155,7 +155,7 @@ jobs:
         os_patch_level: ${{ inputs.os_patch_level }}
         sublevel: ${{ steps.extract.outputs.sublevel }}
 
-           - name: Setup NoMount
+    - name: Setup NoMount
       run: |
         cd kernel/common
         git clone https://github.com
