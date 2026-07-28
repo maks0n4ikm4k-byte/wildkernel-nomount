@@ -155,20 +155,20 @@ jobs:
         os_patch_level: ${{ inputs.os_patch_level }}
         sublevel: ${{ steps.extract.outputs.sublevel }}
 
-        - name: Setup NoMount
+           - name: Setup NoMount
       run: |
         cd kernel/common
         git clone https://github.com
         cp -r nomount/kernel/nomount fs/
 
-        # Интеграция в сборочные файлы VFS ядра
+        # Integration into VFS kernel build files
         echo "obj-\$(CONFIG_NOMOUNT) += nomount/" >> fs/Makefile
         sed -i '/endmenu/i \config NOMOUNT\n\tbool "NoMount support"\n\tdefault y' fs/Kconfig
 
-        # Применение патча для ядра 6.1
+        # Apply patch for kernel 6.1
         patch -p1 < nomount/kernel/patches/android-6.1.patch
 
-        # Включение модуля в общую конфигурацию
+        # Enable module in defconfig
         echo "CONFIG_NOMOUNT=y" >> arch/arm64/configs/gki_defconfig
 
     - name: Baseband Guard
